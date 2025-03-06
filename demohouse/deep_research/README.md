@@ -71,11 +71,16 @@ Deep Research 是一款专为应对复杂问题而设计的高效工具，利用
 
      ```python
      # Deepseek R1 模型推理接入点，不建议使用蒸馏版本
+     # 使用您的Endpoint ID 代替 YOUR_ENDPOINT_ID
+     # 示例： REASONING_EP_ID = "ep-20250306154408-abcde"
      REASONING_EP_ID = "YOUR_ENDPOINT_ID"
      # 设置使用火山方舟零代码联网应用作为搜索引擎
      SEARCH_ENGINE = "volc_bot"
      # 配置火山方舟零代码联网应用的bot id
+     # 使用您的bot ID 代替 YOUR_BOT_ID
+     # 示例： SEARCH_BOT_ID = "bot-20250304164613-abcde"
      SEARCH_BOT_ID = "YOUR_BOT_ID"
+
      # 用于测试的问题
      QUERY = "找到2023年中国GDP超过万亿的城市，详细分析其中排名后十位的城市的增长率和GDP构成，并结合各城市规划预测5年后这些城市的GDP排名可能会如何变化"
      ```
@@ -84,10 +89,14 @@ Deep Research 是一款专为应对复杂问题而设计的高效工具，利用
 
      ```python
      # Deepseek R1 模型推理接入点，不建议使用蒸馏版本
+     # 使用您的Endpoint ID 代替 YOUR_ENDPOINT_ID
+     # 示例： REASONING_EP_ID = "ep-20250306154408-abcde"
      REASONING_EP_ID = "YOUR_ENDPOINT_ID"
      # 设置使用tavily作为搜索引擎
      SEARCH_ENGINE = "tavily"
      # 配置tavily的APIKEY
+     # 使用您的tavily APIKEY 代替 YOUR_TAVILY_API_KEY
+     # 示例： TAVILY_API_KEY = "tavily-api-key"
      TAVILY_API_KEY = "YOUR_TAVILY_API_KEY"
      # 用于测试的问题
      QUERY = "找到2023年中国GDP超过万亿的城市，详细分析其中排名后十位的城市的增长率和GDP构成，并结合各城市规划预测5年后这些城市的GDP排名可能会如何变化"
