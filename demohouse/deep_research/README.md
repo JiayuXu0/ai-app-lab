@@ -71,11 +71,11 @@ Deep Research 是一款专为应对复杂问题而设计的高效工具，利用
 
      ```python
      # Deepseek R1 模型推理接入点，不建议使用蒸馏版本
-     REASONING_EP_ID = "{YOUR_ENDPOINT_ID}"
+     REASONING_EP_ID = "YOUR_ENDPOINT_ID"
      # 设置使用火山方舟零代码联网应用作为搜索引擎
      SEARCH_ENGINE = "volc_bot"
      # 配置火山方舟零代码联网应用的bot id
-     SEARCH_BOT_ID = "{YOUR_BOT_ID}"
+     SEARCH_BOT_ID = "YOUR_BOT_ID"
      # 用于测试的问题
      QUERY = "找到2023年中国GDP超过万亿的城市，详细分析其中排名后十位的城市的增长率和GDP构成，并结合各城市规划预测5年后这些城市的GDP排名可能会如何变化"
      ```
@@ -84,11 +84,11 @@ Deep Research 是一款专为应对复杂问题而设计的高效工具，利用
 
      ```python
      # Deepseek R1 模型推理接入点，不建议使用蒸馏版本
-     REASONING_EP_ID = "{YOUR_ENDPOINT_ID}"
+     REASONING_EP_ID = "YOUR_ENDPOINT_ID"
      # 设置使用tavily作为搜索引擎
      SEARCH_ENGINE = "tavily"
      # 配置tavily的APIKEY
-     TAVILY_API_KEY = "{YOUR_TAVILY_API_KEY}"
+     TAVILY_API_KEY = "YOUR_TAVILY_API_KEY"
      # 用于测试的问题
      QUERY = "找到2023年中国GDP超过万亿的城市，详细分析其中排名后十位的城市的增长率和GDP构成，并结合各城市规划预测5年后这些城市的GDP排名可能会如何变化"
      ```
@@ -97,7 +97,8 @@ Deep Research 是一款专为应对复杂问题而设计的高效工具，利用
 
     ```shell
     # 填写火山方舟API KEY
-    export ARK_API_KEY="{YOUR_ARK_API_KEY}"
+    # 示例 export ARK_API_KEY="abc-def-ghi"
+    export ARK_API_KEY="YOUR_ARK_API_KEY"
     ```
 
 5. 本地运行
@@ -121,29 +122,38 @@ Deep Research 是一款专为应对复杂问题而设计的高效工具，利用
 
      ```python
      # Deepseek R1 模型推理接入点，不建议使用蒸馏版本
-     REASONING_EP_ID = "{YOUR_ENDPOINT_ID}"
+     # 使用您的Endpoint ID 代替 YOUR_ENDPOINT_ID
+     # 示例： REASONING_EP_ID = "ep-20250306154408-abcde"
+     REASONING_EP_ID = "YOUR_ENDPOINT_ID"
      # 设置使用火山方舟零代码联网应用作为搜索引擎
      SEARCH_ENGINE = "volc_bot"
      # 配置火山方舟零代码联网应用的bot id
-     SEARCH_BOT_ID = "{YOUR_BOT_ID}"
+     # 使用您的bot ID 代替 YOUR_BOT_ID
+     # 示例： SEARCH_BOT_ID = "bot-20250304164613-abcde"
+     SEARCH_BOT_ID = "YOUR_BOT_ID"
      ```
 
    - 如果使用 tavily 作为搜索引擎，配置修改如下
 
      ```python
      # Deepseek R1 模型推理接入点，不建议使用蒸馏版本
-     REASONING_EP_ID = "{YOUR_ENDPOINT_ID}"
+     # 使用您的Endpoint ID 代替 YOUR_ENDPOINT_ID
+     # 示例： REASONING_EP_ID = "ep-20250306154408-abcde"
+     REASONING_EP_ID = "YOUR_ENDPOINT_ID"
      # 设置使用tavily作为搜索引擎
      SEARCH_ENGINE = "tavily"
      # 配置tavily的APIKEY
-     TAVILY_API_KEY = "{YOUR_TAVILY_API_KEY}"  
+     # 使用您的tavily APIKEY 代替 YOUR_TAVILY_API_KEY
+     # 示例： TAVILY_API_KEY = "tavily-api-key"
+     TAVILY_API_KEY = "YOUR_TAVILY_API_KEY"
      ```
 
 3. 设置环境变量`ARK_API_KEY`
 
     ```shell
     # 填写火山方舟API KEY
-    export ARK_API_KEY="{YOUR_ARK_API_KEY}"
+    # 示例 export ARK_API_KEY="abc-def-ghi"
+    export ARK_API_KEY="YOUR_ARK_API_KEY"
     ```
 
 4. 安装项目依赖并运行
@@ -168,7 +178,7 @@ Deep Research 是一款专为应对复杂问题而设计的高效工具，利用
     from openai import OpenAI
     
     # 注意baseUrl
-    client = OpenAI(base_url="http://localhost:8888/api/v3/bots")
+    client = OpenAI(base_url="http://localhost:8888/api/v3/bots", api_key="{API_KEY}")
     
     
     def main():
@@ -187,16 +197,17 @@ Deep Research 是一款专为应对复杂问题而设计的高效工具，利用
         thinking = False
     
         for chunk in stream_resp:
-            if chunk.choices[0].delta.reasoning_content:
+            if chunk.choices[0].delta.model_extra.get("reasoning_content"):
                 if not thinking:
                     print("\n----思考过程----\n")
                     thinking = True
-                print(chunk.choices[0].delta.reasoning_content, end="")
+                content = chunk.choices[0].delta.model_extra.get("reasoning_content", "")
+                print(content, end="", flush=True)
             elif chunk.choices[0].delta.content:
                 if thinking:
                     print("\n----输出回答----\n")
                     thinking = False
-                print(chunk.choices[0].delta.content, end="")
+                print(chunk.choices[0].delta.content, end="", flush=True)
     
     
     if __name__ == "__main__":
@@ -218,22 +229,28 @@ Deep Research 是一款专为应对复杂问题而设计的高效工具，利用
 
      ```python
      # Deepseek R1 模型推理接入点，不建议使用蒸馏版本
-     REASONING_EP_ID = "{YOUR_ENDPOINT_ID}"
+     # 使用您的Endpoint ID 代替 YOUR_ENDPOINT_ID
+     # 示例： REASONING_EP_ID = "ep-20250306154408-abcde"
+     REASONING_EP_ID = "YOUR_ENDPOINT_ID"
      # 设置使用火山方舟零代码联网应用作为搜索引擎
      SEARCH_ENGINE = "volc_bot"
      # 配置火山方舟零代码联网应用的bot id
-     SEARCH_BOT_ID = "{YOUR_BOT_ID}"
+     # 使用您的bot ID 代替 YOUR_BOT_ID
+     # 示例： SEARCH_BOT_ID = "bot-20250304164613-abcde"
+     SEARCH_BOT_ID = "YOUR_BOT_ID"
      ```
 
    - 如果使用 tavily 作为搜索引擎，配置修改如下
 
      ```python
      # Deepseek R1 模型推理接入点，不建议使用蒸馏版本
-     REASONING_EP_ID = "{YOUR_ENDPOINT_ID}"
+     REASONING_EP_ID = "YOUR_ENDPOINT_ID" # 示例： REASONING_EP_ID = "ep-20250306154408-abcde"
      # 设置使用tavily作为搜索引擎
      SEARCH_ENGINE = "tavily"
      # 配置tavily的APIKEY
-     TAVILY_API_KEY = "{YOUR_TAVILY_API_KEY}"
+     # 使用您的tavily APIKEY 代替 YOUR_TAVILY_API_KEY
+     # 示例： TAVILY_API_KEY = "tavily-api-key"
+     TAVILY_API_KEY = "YOUR_TAVILY_API_KEY"
      ```
 
 3. 在火山方舟控制台创建高代码应用 [参考文档](https://www.volcengine.com/docs/82379/1333715)
@@ -272,14 +289,14 @@ Deep Research 是一款专为应对复杂问题而设计的高效工具，利用
     
     client = OpenAI(
         base_url="https://ark.cn-beijing.volces.com/api/v3/bots",
-        api_key="{YOUR_ARK_API_KEY}"  # 传入方舟API KEY
+        api_key="YOUR_ARK_API_KEY"  # 传入方舟API KEY
     )
     
     
     def main():
         # stream run
         stream_resp = client.chat.completions.create(
-            model="{YOUR_BOT_ID}",  # 传入部署的高代码应用botId
+            model="YOUR_BOT_ID",  # 传入部署的高代码应用botId
             messages=[
                 {
                     "role": "user",
@@ -292,16 +309,17 @@ Deep Research 是一款专为应对复杂问题而设计的高效工具，利用
         thinking = False
     
         for chunk in stream_resp:
-            if chunk.choices[0].delta.reasoning_content:
+            if chunk.choices[0].delta.model_extra.get("reasoning_content"):
                 if not thinking:
                     print("\n----思考过程----\n")
                     thinking = True
-                print(chunk.choices[0].delta.reasoning_content, end="")
+                content = chunk.choices[0].delta.model_extra.get("reasoning_content", "")
+                print(content, end="", flush=True)
             elif chunk.choices[0].delta.content:
                 if thinking:
                     print("\n----输出回答----\n")
                     thinking = False
-                print(chunk.choices[0].delta.content, end="")
+                print(chunk.choices[0].delta.content, end="", flush=True)
     
     
     if __name__ == "__main__":
